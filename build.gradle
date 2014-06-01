@@ -1,0 +1,63 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+
+buildscript{
+	repositories {
+		mavenLocal()
+		maven { url "http://repo.spring.io/libs-snapshot"}
+	}
+
+	dependencies {
+ 		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.2.RELEASE")
+	}
+}
+
+
+sourceCompatibility = 1.7
+version = '0.0.1'
+jar {
+	baseName = 'test'
+	version = version
+	manifest {
+		attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+	}
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir 'src/main/java'
+		}
+		resources {
+			srcDir 'src/main/resources'
+		}
+	}
+	test {
+		java {
+			srcDir 'src/test/java'
+		}
+		resources {
+			srcDir 'src/test/resources'
+		}
+	}
+}
+
+uploadArchives {
+	repositories {
+		flatDir {
+			dirs 'repos'
+		}
+	}
+}
+
+repositories{
+	mavenCentral()
+	maven { url 'http://repo.spring.io/libs-snapshot' }
+}
+
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter-web")
+    	compile("com.fasterxml.jackson.core:jackson-databind")	
+	testCompile group: 'junit', name: 'junit', version: '4.+'
+}
